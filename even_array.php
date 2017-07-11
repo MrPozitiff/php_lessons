@@ -24,7 +24,10 @@ if (php_sapi_name() == 'cli') {
         }
     }
 } else {
-    echo "<h3>Оригинальный массив:</br></h3>";
+    echo "<!DOCTYPE html> \n <html lang=\"en\"> \n <head> \n <meta charset=\"UTF-8\"> \n <title>Четные из массива - Домашнее задание</title> \n </head> \n <body>";
+    echo "<h4>Задание:</h4>";
+    echo "<p>Сгенерировать массив чисел 10х10 со случайными значениями от 0 до 1000, удалить из массива все четные элементы</p>";
+    echo "<h4>Оригинальный массив:</br></h4>";
     echo "<table border=\"1\">";
     foreach ($arr as $v1) {
         echo "<tr>";
@@ -34,15 +37,15 @@ if (php_sapi_name() == 'cli') {
         echo "</tr>";
     }
     echo "</table>";
-    echo "<h3>Четные цифры из массива:</br></h3>";
+    echo "<h4>Нечетные элементы массива:</br></h4>";
     echo "<table border=\"1\">";
     foreach ($arr as $v1) {
         echo "<tr>";
         foreach ($v1 as $v2) {
             if ( is_int($v2/2)) {
-                echo "<td> $v2 </td>";
-            } else {
                 echo "<td>     </td>";
+            } else {
+                echo "<td> $v2 </td>";
             }
         }
         echo "</tr>";
