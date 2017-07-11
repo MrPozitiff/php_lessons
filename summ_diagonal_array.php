@@ -20,8 +20,10 @@ if (php_sapi_name() == 'cli') {
                 echo " $v2   ";
             } elseif (strlen($v2) == 2){
                 echo " $v2  ";
-            } else {
+            } elseif (strlen($v2) == 3){
                 echo " $v2 ";
+            } else {
+                echo " $v2";
             }
         }
     }
@@ -36,8 +38,11 @@ if (php_sapi_name() == 'cli') {
                 case 2:
                     $indent = "  ";
                     break;
-                default:
+                case 3:
                     $indent = " ";
+                    break;
+                default:
+                    $indent = "";
             }
             if ( $key1 == $key2) {
                 $before = $v2+$arr[$key1][9-$key2];
