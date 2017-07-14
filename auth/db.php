@@ -6,8 +6,6 @@
  * Time: 20:38
  */
 
-
-
 $email = (string) isset($_POST['email'])?trim($_POST['email']):false;
 $pass = (string) isset($_POST['pass'])?trim($_POST['pass']):false;
 
@@ -22,7 +20,7 @@ if ($email == false || $pass == false) {
     $email_valid = mysqli_escape_string($link, filter_var($email, FILTER_VALIDATE_EMAIL));
     //echo var_dump($email_valid);
     if ($email_valid == false) {
-        echo "Пожалуйста, введите правильный e-mail!";
+        $_POST['answer'] = "Пожалуйста, введите правильный e-mail!";
     } else {
         $pass_secure = md5($pass);
         $salt = md5($pass . $pass_secure);
@@ -30,15 +28,14 @@ if ($email == false || $pass == false) {
         $querry = "SELECT * FROM users WHERE email='$email_valid'";
         $result = mysqli_query($link, $querry);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
         if ($row['email'] == $email_valid) {
             if ($row['pass'] == $pass_secure && $row['salt'] == $salt) {
-                echo "<h2> Авторизация успешна! </br>Добро пожаловать, ", $email . "!</h2>";
+                $_POST['answer'] = "<h2> Авторизация успешна! </br>Добро пожаловать, ". $email . "!</h2>";
             } else {
-                echo "Неверный e-mail или пароль";
+                $_POST['answer'] = "Неверный e-mail или пароль";
             }
         } else {
-            echo "Пользователь не найден! </br> Пожалуйста, <a href='http://localhost/reg/view.php'>зарегестрируйтесь</a>";
+            $_POST['answer'] = "Пользователь не найден! </br> Пожалуйста, <a href='index.php?selection=1&submit=Submit' >зарегестрируйтесь</a>";
         }
     }
 }

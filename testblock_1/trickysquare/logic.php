@@ -25,13 +25,3 @@ if (php_sapi_name() == 'cli') {
     }
 }
 
-function trickysquare ($a){
-    if ($a > 14 && $a % 5 ==0 &&is_int(($a/5)/2) != true) {
-        $first = substr($a, 0, -1);
-        $second = $first + 1;
-        $square = ($first * $second) . 25;
-        return $square;
-    } else {
-        echo $a, " - немножко не подходит под наш способ \n";
-    }
-}

@@ -8,25 +8,25 @@
 
 $email = (string) isset($_POST['email'])?trim($_POST['email']):false;
 $email_confirmation = (string) isset($_POST['email_confirmation'])?trim($_POST['email_confirmation']):false;
-$pass = (string) isset($_POST['pass'])?mysqli_escape_string($link, trim($_POST['pass'])):false;
-$pass_confirmation = (string) isset($_POST['pass_confirmation'])?mysqli_escape_string($link, trim($_POST['pass_confirmation'])):false;
+$pass = (string) isset($_POST['pass'])? trim($_POST['pass']):false;
+$pass_confirmation = (string) isset($_POST['pass_confirmation'])?trim($_POST['pass_confirmation']):false;
 
 if ($email == false || $pass == false || $email_confirmation == false || $pass_confirmation == false){
     if ($email == false && $pass == false && $email_confirmation == false && $pass_confirmation == false){
-        echo '';
+        $_POST['answer'] = '';
     } else {
-        echo "Пожалуйста, заполните все поля ввода!";
+        $_POST['answer'] =  "Пожалуйста, заполните все поля ввода!";
     }
 } else {
     if ($email != $email_confirmation) {
-        echo "Ошибка! Введенные e-mail не совпадают!";
+        $_POST['answer'] = "Ошибка! Введенные e-mail не совпадают!";
     } elseif ($pass != $pass_confirmation) {
-        echo "Ошибка! Введенные пароли не совпадают!";
+        $_POST['answer'] = "Ошибка! Введенные пароли не совпадают!";
     } else {
         $link = mysqli_connect('localhost', 'lessons', '123454321', 'Users');
         $email_valid = mysqli_escape_string($link, filter_var($email, FILTER_VALIDATE_EMAIL));
         if ($email_valid == false) {
-            echo "Пожалуйста, введите правильный e-mail!";
+            $_POST['answer'] = "Пожалуйста, введите правильный e-mail!";
         } else {
             $pass_secure = md5($pass);
             $salt = md5($pass . $pass_secure);
@@ -36,15 +36,15 @@ if ($email == false || $pass == false || $email_confirmation == false || $pass_c
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
             if ($row['email'] == $email_valid) {
-                echo "Данный пользователь уже существует </br> Пожалуйста, используйте <a href='http://localhost/auth/view.php'>форму авторизации</a>";
+                $_POST['answer'] = "Данный пользователь уже существует </br> Пожалуйста, используйте <a href='index.php?selection=0&submit=Submit'>форму авторизации</a>";
             } else {
                 $reg_querry = "INSERT INTO `users`( `email`, `pass`, `salt`) VALUES ('$email_valid','$pass_secure','$salt')";
                 $reg_result = mysqli_query($link, $reg_querry);
                 //$reg_row = mysqli_fetch_array($reg_result, MYSQLI_ASSOC);
                 if ($reg_result == true) {
-                    echo "Регистрация успешна!";
+                    $_POST['answer'] = "Регистрация успешна!";
                 } else {
-                    echo "Что-то пошло не так!";
+                    $_POST['answer'] = "Что-то пошло не так!";
                 }
             }
         }

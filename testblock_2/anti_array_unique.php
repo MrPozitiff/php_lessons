@@ -5,10 +5,7 @@
  * Date: 13.07.17
  * Time: 17:40
  */
-$arr = array();
-for ($i = 0; $i < 10; $i++){
-        $arr[$i] = rand(0,9);
-}
+$arr = create_array(10,false,0,10);
 
 function anti_unique($a){
     $new_arr = array();
@@ -26,12 +23,10 @@ function anti_unique($a){
     return $new_arr;
 }
 
-echo "\nОригинальный массив:\n";
-foreach ($arr as $key1 =>$v2) {
-    echo " $v2 ";
-}
-echo "\nМассив из повторяющихся значений\n";
+echo "Оригинальный массив:</br>";
+view_array($arr);
+
+echo "</br>Массив из повторяющихся значений</br>";
 $new_arr = anti_unique($arr);
-foreach ($new_arr as $v2) {
-    echo " $v2 ";
-}
+view_array($new_arr);
+
